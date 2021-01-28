@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title%}posting{% endblock %}
+{% block content %}
+<!-- ################### Start Container ##############################-->
+ <div class="container-fluid">
+     <!-- ################### Start Row ##############################-->
+    <div class="row">
+        <!-- ################### Column for Item Image ##############################-->
+        <div class="col-lg">
+            <img src={{url_for('static', filename=posting["image"] ) }} class="img-fluid card-img-top" alt="Responsive image">
+        </div>
+        <!-- ################### End Image Column ##############################-->
+
+        <!-- ################### Information Column ##############################-->
+        <div class="col">
+            <h2 class="h2" style="margin-top: 2rem; margin-bottom: 1rem;">{{posting['title']}}</h2>
+            <h4 class="h4" style="margin-bottom: 2rem;">${{posting['price']}}</h4>
+            <h3 class="h3" style="text-decoration: underline;">Details</h3>
+            <h4 class="h4">Category:</h4>
+            <p>{{posting['category']}}</p>
+            <h4 class="h4">User Description:</h4>
+            <p>{{posting['description']}}</p>
+            <h5 class="h5">Date Posted:</h5>
+            <p>{{posting['date']}}</p>
+            <hr>
+            {% if session['email'] %}
+            {% if session['email'] != posting['email']%}
+            <a href="/message?author={{posting['email']}}&postID={{posting['postid']}}" class="btn btn-primary">Contact Seller</a>
+            {% endif %}
+            {% else %}
+            <a href="/login" class="btn btn-primary">Contact Seller</a>
+            {% endif %}
+
+        </div>
+        <!-- ################### End Information Column ##############################-->
+
+    </div>
+    <!-- ################### End Row ##############################-->
+ </div> 
+ <!-- ################### End Container ##############################-->
+
+{% endblock %}

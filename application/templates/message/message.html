@@ -1,0 +1,56 @@
+<head>
+  <link rel="stylesheet" type= "text/css" href="{{url_for('static', filename='css/styles/chat.css')}}">
+</head>
+{% extends "base.html" %}
+{% block title%}posting{% endblock %}
+{% block content %}
+
+<!-- ################### CHAT BODY ##############################-->
+<div class = "chatbody" id="log">
+  <h2> Messenger</h2>
+  {% for m in messages%}
+  <p> {{ m['sender']}}</p> <div class = "cont"> <p> {{ m['body']}} </p> <span class="time-right">11:00</span> </div>
+  {% endfor %}
+</div>
+<form  method="POST" action='/message/{{id}}/send'  >
+  <input type="text" name="message"  placeholder="Message" style="width:90%" >
+  <input type="submit" value="Send ">
+</form>
+</div>
+<!-- ################### ENDING CHAT BODY ##############################-->
+
+
+<!-- ################### SCRIPT FOR REAL TIME CHAT ##############################-->
+
+<!-- 
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function() {
+      namespace = '/test';
+  
+      var socket = io(namespace);
+      socket.emit('join', {room: "{{data}}"});
+  
+      socket.on('my_response', function(msg, cb) {
+  
+  
+        if (msg.user !== "{{session['name']}}" ) {
+          $('#log').append('<p>' + msg.user + ' </p> <div class = "cont"> <p>'  +  msg.data + ' </p> <span class="time-right">11:00</span> </div>');
+        }else {
+          $('#log').append('<p class="right">' + msg.user + ' </p> <div class = "cont darker"> <p>'   + msg.data + ' </p> <span class="time-left">11:00</span></div>');
+        }
+          if (cb)
+              cb();
+      });
+  
+      $('form#send_room').submit(function(event) {
+          socket.emit('my_room_event', {room: "{{data}}", data: $('#room_data').val(), 'user': '{{user}}'   });
+          return false;
+  
+      });
+  
+  });
+</script> -->
+
+<!-- ################### ENDING SCRIPT FOR REAL TIME CHAT ##############################-->
+
+{% endblock %}

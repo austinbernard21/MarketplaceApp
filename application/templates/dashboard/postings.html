@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/styles/style.css')}}">
+    <script defer src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script defer src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+</head>
+
+<body class="bg-light">
+    <h3 class="d-flex justify-content-center">Total Postings: {{numPosts}}</h3>
+    <div class="container">
+        <table class="table table-striped border bg-white">
+            <thead>
+                <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Post Date</th>
+                    <th scope="col">View</th>
+                    <th scope="col">Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if posts %}
+                {% for p in posts %}
+                <tr>
+                    <td>{{ p['title'] }}</td>
+                    <td>{% if p['approve'] == 1 %}Approved{% else %}Pending{% endif %}</td>
+                    <td>{{ p['date'] }}</td>
+                    
+                    {% if p['approve'] == 1 %}
+                    <td><a class="btn btn-secondary" href='/posting/{{p.postid}}' target="_blank" role="button">View</a></td>
+                    {% else %}
+                    <td><a class="btn btn-info" target="_blank" role="button">Cannot View (Pending Approval)</a></td>
+                    {% endif %}
+                    <!-- <td><button type="button" class="btn btn-secondary">View/Edit Post</button></td> -->
+                    <!-- <td><a href='/dashboard/delete/{{p.postid}}'>Delete</a></td> -->
+
+                    <!-- <td><a class="btn btn-danger" href='/dashboard/delete/{{p.postid}}' role="button">Delete</a></td> -->
+                    <!-- <td><button type="button" class="btn btn-danger" onclick="confirmFunction()">Danger</button></td> -->
+
+                    <td><a class="btn btn-danger" href='/dashboard/delete/{{p.postid}}' onclick="return confirm('Delete {{p.title}}?');"
+                        role="button">Delete</a></td>
+
+                    <!-- <td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">
+                        Delete
+                      </button>
+                    </td> -->
+        
+                      <!-- <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="false">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-body text-center">                            
+                              Remove "{{p['title']}}"?
+                            </div>
+                            <div class="modal-footer justify-content-center">                                                              
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                              <a class="btn btn-danger" href='/dashboard/delete/{{p.postid}}' role="button">Delete</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div> -->
+
+                </tr>
+
+                {% endfor %}           
+                {% endif %}
+             
+
+            </tbody>
+
+        </table>
+    </div>
+    
+</body>
+
+</html>
+
+<script>
+    function confirmFunction(){
+        var result = confirm("Are you sure?");
+        if(result){
+
+        }
+    }
+</script>
